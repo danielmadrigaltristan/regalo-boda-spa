@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PruebasService } from '../../services/pruebas.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-felicitacion',
@@ -33,6 +34,10 @@ import { PruebasService } from '../../services/pruebas.service';
           
           <button (click)="reiniciar()" class="restart-btn">
             Reiniciar Pruebas
+          </button>
+          
+          <button (click)="logout()" class="logout-btn">
+            Cerrar Sesión
           </button>
         </div>
         
@@ -182,6 +187,22 @@ import { PruebasService } from '../../services/pruebas.service';
       transform: translateY(-2px);
     }
 
+    .logout-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
     .final-message {
       border-top: 1px solid #e1e5e9;
       padding-top: 1.5rem;
@@ -213,7 +234,8 @@ import { PruebasService } from '../../services/pruebas.service';
 export class FelicitacionComponent {
   constructor(
     public pruebasService: PruebasService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   abrirWhatsApp() {
@@ -227,6 +249,12 @@ export class FelicitacionComponent {
   }
 
   reiniciar() {
+    this.pruebasService.resetPruebas();
+    this.router.navigate(['/pruebas']);
+  }
+
+  logout() {
+    this.authService.logout();
     this.pruebasService.resetPruebas();
     this.router.navigate(['/']);
   }

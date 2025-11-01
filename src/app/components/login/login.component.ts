@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -123,13 +124,14 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   password = '';
   errorMessage = signal('');
-  
-  private readonly correctPassword = 'boda2025'; // Cambia esto por la clave que quieras
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   onSubmit() {
-    if (this.password === this.correctPassword) {
+    if (this.authService.login(this.password)) {
       this.router.navigate(['/pruebas']);
     } else {
       this.errorMessage.set('Clave incorrecta. Inténtalo de nuevo.');

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PruebasService, Prueba } from '../../services/pruebas.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-pruebas',
@@ -12,8 +13,14 @@ import { PruebasService, Prueba } from '../../services/pruebas.service';
     <div class="pruebas-container">
       @if (pruebaActual()) {
         <div class="prueba-card">
-          <div class="progress-bar">
-            <div class="progress" [style.width.%]="progreso()"></div>
+          <div class="header">
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="progreso()"></div>
+            </div>
+            
+            <button (click)="logout()" class="logout-btn-small" title="Cerrar Sesión">
+              🚪
+            </button>
           </div>
           
           <h1>{{ pruebaActual()!.titulo }}</h1>
@@ -81,12 +88,18 @@ import { PruebasService, Prueba } from '../../services/pruebas.service';
       position: relative;
     }
 
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
     .progress-bar {
-      width: 100%;
+      flex: 1;
       height: 8px;
       background: #e1e5e9;
       border-radius: 4px;
-      margin-bottom: 2rem;
       overflow: hidden;
     }
 
@@ -94,6 +107,27 @@ import { PruebasService, Prueba } from '../../services/pruebas.service';
       height: 100%;
       background: linear-gradient(90deg, #00b894, #00cec9);
       transition: width 0.5s ease;
+    }
+
+    .logout-btn-small {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logout-btn-small:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
     }
 
     h1 {
@@ -204,7 +238,8 @@ export class PruebasComponent {
 
   constructor(
     public pruebasService: PruebasService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     // Actualizar la prueba actual cuando cambie el índice
     effect(() => {
@@ -236,5 +271,11 @@ export class PruebasComponent {
       this.mostrarError.set(true);
       this.codigoInput = '';
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.pruebasService.resetPruebas();
+    this.router.navigate(['/']);
   }
 }
