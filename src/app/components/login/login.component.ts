@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { FloatingFacesComponent } from '../floating-faces/floating-faces.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FloatingFacesComponent],
   template: `
     <div class="login-container">
       <div class="login-card">
@@ -37,6 +38,8 @@ import { AuthService } from '../../services/auth.service';
           </button>
         </form>
       </div>
+      <!-- Caras flotantes de los novios -->
+      <app-floating-faces></app-floating-faces>
     </div>
   `,
   styles: [`
@@ -57,6 +60,8 @@ import { AuthService } from '../../services/auth.service';
       max-width: 400px;
       width: 100%;
       text-align: center;
+      position: relative;
+      z-index: 10;
     }
 
     h1 {

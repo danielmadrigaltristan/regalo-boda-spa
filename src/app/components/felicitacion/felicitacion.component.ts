@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PruebasService } from '../../services/pruebas.service';
 import { AuthService } from '../../services/auth.service';
+import { FloatingFacesComponent } from '../floating-faces/floating-faces.component';
 
 @Component({
   selector: 'app-felicitacion',
   standalone: true,
+  imports: [FloatingFacesComponent],
   template: `
     <div class="felicitacion-container">
       <div class="felicitacion-card">
@@ -45,6 +47,8 @@ import { AuthService } from '../../services/auth.service';
           <p>¡Que tengáis una boda maravillosa! 💕</p>
         </div>
       </div>
+      <!-- Caras flotantes de los novios -->
+      <app-floating-faces></app-floating-faces>
     </div>
   `,
   styles: [`
@@ -67,6 +71,7 @@ import { AuthService } from '../../services/auth.service';
       text-align: center;
       position: relative;
       overflow: hidden;
+      z-index: 10;
     }
 
     .felicitacion-card::before {

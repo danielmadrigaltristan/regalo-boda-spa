@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PruebasService, Prueba } from '../../services/pruebas.service';
 import { AuthService } from '../../services/auth.service';
+import { FloatingFacesComponent } from '../floating-faces/floating-faces.component';
 
 @Component({
   selector: 'app-pruebas',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, FloatingFacesComponent],
   template: `
     <div class="pruebas-container">
       @if (pruebaActual()) {
@@ -66,6 +67,8 @@ import { AuthService } from '../../services/auth.service';
           </div>
         </div>
       }
+      <!-- Caras flotantes de los novios -->
+      <app-floating-faces></app-floating-faces>
     </div>
   `,
   styles: [`
@@ -86,6 +89,7 @@ import { AuthService } from '../../services/auth.service';
       max-width: 600px;
       width: 100%;
       position: relative;
+      z-index: 10;
     }
 
     .header {
