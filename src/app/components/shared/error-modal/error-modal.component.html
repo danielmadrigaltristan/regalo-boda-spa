@@ -1,0 +1,17 @@
+@if (show) {
+  <div class="modal-overlay" (click)="onOverlayClick()">
+    <div class="modal-content" (click)="onContentClick($event)">
+      <div class="modal-image">
+        <img [src]="imageSrc" [alt]="message">
+      </div>
+      <div class="modal-body">
+        <h2>{{ message }}</h2>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-close" (click)="onClose()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+}

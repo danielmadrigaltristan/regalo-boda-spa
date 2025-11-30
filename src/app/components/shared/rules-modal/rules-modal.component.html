@@ -1,0 +1,21 @@
+@if (show) {
+  <div class="modal-overlay" (click)="onOverlayClick()">
+    <div class="modal-content" (click)="onContentClick($event)">
+      <div class="modal-header">
+        <h2>{{ title }}</h2>
+      </div>
+      <div class="modal-body" (scroll)="onScroll($event)">
+        <p [innerHTML]="description"></p>
+      </div>
+      <div class="modal-footer">
+        @if (hasScrolledToBottom()) {
+          <button class="btn-understood" (click)="onUnderstood()">
+            Entendido
+          </button>
+        } @else {
+          <p class="scroll-hint">Desplázate hasta el final para continuar</p>
+        }
+      </div>
+    </div>
+  </div>
+}

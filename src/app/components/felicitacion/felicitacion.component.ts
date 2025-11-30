@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { PruebasService } from '../../services/pruebas.service';
 import { AuthService } from '../../services/auth.service';
 import { FloatingFacesComponent } from '../floating-faces/floating-faces.component';
+import { ConfirmationModalComponent } from '../shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-felicitacion',
   standalone: true,
-  imports: [FloatingFacesComponent],
+  imports: [CommonModule, FloatingFacesComponent, ConfirmationModalComponent],
   template: `
     <div class="felicitacion-container">
       <div class="felicitacion-card">
@@ -38,8 +40,8 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
             Reiniciar Pruebas
           </button>
           
-          <button (click)="logout()" class="logout-btn">
-            Cerrar Sesión
+          <button (click)="confirmarLogout()" class="logout-btn">
+            <span style="filter: grayscale(100%) brightness(0);">❌</span> Cerrar Sesión
           </button>
         </div>
         
@@ -50,6 +52,17 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
       <!-- Caras flotantes de los novios -->
       <app-floating-faces></app-floating-faces>
     </div>
+    
+    <!-- Modal de confirmación -->
+    <app-confirmation-modal
+      [show]="mostrarModal()"
+      title="¿Estás seguro?"
+      message="¿Quieres cerrar sesión y salir de la aplicación?"
+      confirmText="Sí, cerrar sesión"
+      cancelText="Cancelar"
+      (confirmed)="confirmarCerrarSesion()"
+      (cancelled)="cancelarLogout()">
+    </app-confirmation-modal>
   `,
   styles: [`
     .felicitacion-container {
@@ -237,6 +250,8 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
   `]
 })
 export class FelicitacionComponent {
+  mostrarModal = signal(false);
+
   constructor(
     public pruebasService: PruebasService,
     private router: Router,
@@ -258,9 +273,22 @@ export class FelicitacionComponent {
     this.router.navigate(['/pruebas']);
   }
 
-  logout() {
+  confirmarLogout() {
+    this.mostrarModal.set(true);
+  }
+
+  cancelarLogout() {
+    this.mostrarModal.set(false);
+  }
+
+  confirmarCerrarSesion() {
+    this.mostrarModal.set(false);
     this.authService.logout();
     this.pruebasService.resetPruebas();
     this.router.navigate(['/']);
+  }
+
+  logout() {
+    this.confirmarLogout();
   }
 }

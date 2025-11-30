@@ -1,0 +1,16 @@
+@if (show) {
+  <div class="modal-overlay" (click)="onOverlayClick()">
+    <div class="modal-content" (click)="onContentClick($event)">
+      <h2>{{ title }}</h2>
+      <p>{{ message }}</p>
+      <div class="modal-actions">
+        <button (click)="onCancel()" class="btn-cancel">
+          {{ cancelText }}
+        </button>
+        <button (click)="onConfirm()" class="btn-confirm">
+          {{ confirmText }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

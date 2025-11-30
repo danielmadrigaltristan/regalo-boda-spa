@@ -16,7 +16,7 @@ export class PruebasService {
     {
       id: 1,
       titulo: 'Toques con el balón',
-      descripcion: 'Debes hacer 10 toques seguidos con el balón sin que toque el suelo. Una vez completado, introduce el código que encontrarás escondido.',
+      descripcion: 'Las fuerzas del universo del fútbol se enfrentan una vez más... pero esta vez, en nombre del amor!\n\n Uno será el orgulloso defensor del Real Madrid, el otro la fiera pasión del Barça. Vestidos con sus colores, debereis demostrar que en vuestra relación hay tanto juego en equipo como rivalidad.\n\nEl reto es simple… o eso parece:\n\nCada uno deberá mantener el balón en el aire y dar 10 toques… Ni el viento, ni las risas, ni las miradas cómplices pueden distraeros. Si el balón cae… el orgullo también.¿Podreis mantener la paz entre tanto toque, o el Clásico romperá la pareja antes que el balón toque el suelo?\n\nY no os olvideis, para que el VAR lo pueda valorar, grabado debe quedar.',
       codigo: 'BALON10',
       completada: false
     },

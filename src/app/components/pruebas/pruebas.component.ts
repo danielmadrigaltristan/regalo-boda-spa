@@ -5,11 +5,14 @@ import { CommonModule } from '@angular/common';
 import { PruebasService, Prueba } from '../../services/pruebas.service';
 import { AuthService } from '../../services/auth.service';
 import { FloatingFacesComponent } from '../floating-faces/floating-faces.component';
+import { ConfirmationModalComponent } from '../shared/confirmation-modal/confirmation-modal.component';
+import { RulesModalComponent } from '../shared/rules-modal/rules-modal.component';
+import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
 
 @Component({
   selector: 'app-pruebas',
   standalone: true,
-  imports: [FormsModule, CommonModule, FloatingFacesComponent],
+  imports: [FormsModule, CommonModule, FloatingFacesComponent, ConfirmationModalComponent, RulesModalComponent, ErrorModalComponent],
   template: `
     <div class="pruebas-container">
       @if (pruebaActual()) {
@@ -19,15 +22,21 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
               <div class="progress" [style.width.%]="progreso()"></div>
             </div>
             
-            <button (click)="logout()" class="logout-btn-small" title="Cerrar Sesión">
-              🚪
+            <button (click)="confirmarLogout()" class="logout-btn-small" title="Cerrar Sesión">
+              <span style="filter: grayscale(100%) brightness(0);">❌</span>
             </button>
           </div>
           
           <h1>{{ pruebaActual()!.titulo }}</h1>
           
-          <div class="descripcion">
-            <p>{{ pruebaActual()!.descripcion }}</p>
+          <div class="actions-container">
+            <button (click)="mostrarReglas()" class="action-btn btn-rules">
+              📜 Ver Reglas
+            </button>
+            
+            <button (click)="probarSuerte()" class="action-btn btn-luck">
+              🎲 Probar Suerte
+            </button>
           </div>
           
           <form (ngSubmit)="verificarCodigo()" #codigoForm="ngForm">
@@ -41,15 +50,8 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
                 placeholder="Código secreto"
                 class="form-input"
                 required
-                [class.error]="mostrarError()"
               />
             </div>
-            
-            @if (mostrarError()) {
-              <div class="error-message">
-                Código incorrecto. ¡Inténtalo de nuevo!
-              </div>
-            }
             
             @if (mostrarExito()) {
               <div class="success-message">
@@ -58,7 +60,7 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
             }
             
             <button type="submit" class="submit-btn" [disabled]="!codigoForm.valid">
-              Verificar Código
+              ✓ Verificar Código
             </button>
           </form>
           
@@ -70,6 +72,34 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
       <!-- Caras flotantes de los novios -->
       <app-floating-faces></app-floating-faces>
     </div>
+    
+    <!-- Modal de confirmación de logout -->
+    <app-confirmation-modal
+      [show]="mostrarModal()"
+      title="¿Estás seguro?"
+      message="¿Quieres cerrar sesión y salir de la aplicación?"
+      confirmText="Sí, cerrar sesión"
+      cancelText="Cancelar"
+      (confirmed)="confirmarCerrarSesion()"
+      (cancelled)="cancelarLogout()">
+    </app-confirmation-modal>
+    
+    <!-- Modal de reglas -->
+    <app-rules-modal
+      [show]="mostrarModalReglas()"
+      [title]="pruebaActual()?.titulo || ''"
+      [description]="getFormattedDescription()"
+      (closed)="cerrarReglas()"
+      (understood)="cerrarReglas()">
+    </app-rules-modal>
+    
+    <!-- Modal de error -->
+    <app-error-modal
+      [show]="mostrarModalError()"
+      [imageSrc]="errorImageSrc()"
+      message="Vaya, no ha habido suerte."
+      (closed)="cerrarModalError()">
+    </app-error-modal>
   `,
   styles: [`
     .pruebas-container {
@@ -139,6 +169,47 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
       text-align: center;
       margin-bottom: 2rem;
       font-size: 2rem;
+    }
+
+    .actions-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-rules {
+      background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+      color: white;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+      }
+    }
+
+    .btn-luck {
+      background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+      color: white;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);
+      }
     }
 
     .descripcion {
@@ -236,9 +307,14 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
 })
 export class PruebasComponent {
   codigoInput = '';
-  mostrarError = signal(false);
   mostrarExito = signal(false);
+  mostrarModal = signal(false);
+  mostrarModalReglas = signal(false);
+  mostrarModalError = signal(false);
+  errorImageSrc = signal('/assets/images/novia.png');
   pruebaActual = signal<Prueba | null>(null);
+
+  private codigosValidos = ['BALON10', 'MUSIC15', 'DANCE2M', 'LOVE123'];
 
   constructor(
     public pruebasService: PruebasService,
@@ -264,22 +340,74 @@ export class PruebasComponent {
     return (this.pruebasService.getPruebasCompletadas() / this.pruebasService.getTotalPruebas()) * 100;
   }
 
+  getFormattedDescription(): string {
+    const desc = this.pruebaActual()?.descripcion || '';
+    return desc.replace(/\\n/g, '\n');
+  }
+
+  mostrarReglas() {
+    this.mostrarModalReglas.set(true);
+  }
+
+  cerrarReglas() {
+    this.mostrarModalReglas.set(false);
+  }
+
+  probarSuerte() {
+    const codigoGenerado = this.generarCodigoAleatorio();
+    this.codigoInput = codigoGenerado;
+  }
+
+  generarCodigoAleatorio(): string {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let codigo = '';
+    
+    do {
+      codigo = '';
+      const longitud = Math.floor(Math.random() * 3) + 6; // Entre 6 y 8 caracteres
+      for (let i = 0; i < longitud; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+    } while (this.codigosValidos.includes(codigo));
+    
+    return codigo;
+  }
+
   verificarCodigo() {
-    this.mostrarError.set(false);
     this.mostrarExito.set(false);
 
     if (this.pruebasService.verificarCodigo(this.codigoInput)) {
       this.mostrarExito.set(true);
       this.codigoInput = '';
     } else {
-      this.mostrarError.set(true);
+      // Alternar entre las dos imágenes aleatoriamente
+      const images = ['/assets/images/novia.png', '/assets/images/novio.png'];
+      this.errorImageSrc.set(images[Math.floor(Math.random() * images.length)]);
+      this.mostrarModalError.set(true);
       this.codigoInput = '';
     }
   }
 
-  logout() {
+  cerrarModalError() {
+    this.mostrarModalError.set(false);
+  }
+
+  confirmarLogout() {
+    this.mostrarModal.set(true);
+  }
+
+  cancelarLogout() {
+    this.mostrarModal.set(false);
+  }
+
+  confirmarCerrarSesion() {
+    this.mostrarModal.set(false);
     this.authService.logout();
     this.pruebasService.resetPruebas();
     this.router.navigate(['/']);
+  }
+
+  logout() {
+    this.confirmarLogout();
   }
 }
