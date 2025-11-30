@@ -61,8 +61,10 @@ export class FloatingFacesComponent implements OnInit, OnDestroy {
 
   // Rutas de las imágenes - cambiar por las rutas reales de tus imágenes
   private imagePaths = [
-    'assets/images/novio.png',   // Cambia por el nombre real de tu imagen del novio
-    'assets/images/novia.png'    // Cambia por el nombre real de tu imagen de la novia
+    'assets/images/novios/novio.png',    // Cambia por el nombre real de tu imagen del novio
+    'assets/images/novios/ivan.png',
+    'assets/images/novios/elena.png',
+    'assets/images/novios/novia.png'    // Cambia por el nombre real de tu imagen de la novia
   ];
 
   constructor(private cdr: ChangeDetectorRef) {}

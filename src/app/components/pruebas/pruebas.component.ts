@@ -97,7 +97,7 @@ import { ErrorModalComponent } from '../shared/error-modal/error-modal.component
     <app-error-modal
       [show]="mostrarModalError()"
       [imageSrc]="errorImageSrc()"
-      message="Vaya, no ha habido suerte."
+      [message]="errorMessage()"
       (closed)="cerrarModalError()">
     </app-error-modal>
   `,
@@ -312,10 +312,52 @@ export class PruebasComponent {
   mostrarModalReglas = signal(false);
   mostrarModalError = signal(false);
   errorImageSrc = signal('/assets/images/error/cepi.png');
+  errorMessage = signal('Vaya, no ha habido suerte.');
   pruebaActual = signal<Prueba | null>(null);
 
-  private codigosValidos = ['BALON10', 'MUSIC15', 'DANCE2M', 'LOVE123'];
-  private errorImages = ['/assets/images/error/cepi.png'];
+  private codigosValidos = ['T0QU35', 'H1MN0', 'T13ND4'];
+  private errorImages = [
+    '/assets/images/error/cepi.png',
+    '/assets/images/error/ana.png',
+    '/assets/images/error/ana2.png',
+    '/assets/images/error/dani.png',
+    '/assets/images/error/dani3.png',
+    '/assets/images/error/dani4.png',
+    '/assets/images/error/dani5.png',
+    '/assets/images/error/edu.png',
+    '/assets/images/error/emma.png',
+    '/assets/images/error/fede.png',
+    '/assets/images/error/hector.png',
+    '/assets/images/error/hermanasara.png',
+    '/assets/images/error/ibelina.png',
+    '/assets/images/error/isidro.png',
+    '/assets/images/error/jon.png',
+    '/assets/images/error/lirio.png',
+    '/assets/images/error/miriam.png',
+    '/assets/images/error/moni.png',
+    '/assets/images/error/moriche.png',
+    '/assets/images/error/novia1.png',
+    '/assets/images/error/paula.png',
+    '/assets/images/error/pini.png',
+    '/assets/images/error/potter.png',
+    '/assets/images/error/rebe.png',
+    '/assets/images/error/sara.png',
+    '/assets/images/error/sara2.png',
+    '/assets/images/error/vero.png',
+    '/assets/images/error/viti.png',
+    '/assets/images/error/witi.png',
+  ];
+  private errorMessages = [
+    '¡Ups! Ese código no es válido... ¿Seguro que no os habéis saltado alguna prueba? 😅',
+    'Mmm... ¡Ese no es! Pero no os rindáis, el amor verdadero persevera 💕',
+    '¡Casi! Bueno, en realidad no... ¡Pero confío en vosotros! 🎯',
+    '¡Ay ay ay! Parece que ese código es tan falso como las cartas al gavillo 😂',
+    'No, no y no. Pero hey, ¡al menos sois valientes intentándolo! 💪',
+    '¡Ni de casualidad! Volved a intentarlo cuando tengáis el código correcto 🔐',
+    'Ese código tiene menos validez que decir en el bar, "me tomo una y me voy" 😜',
+    '¡Fallaste más que el novio en la tómbola! Inténtalo de nuevo 💍',
+    'Código incorrecto. ¿Habéis probado a pedirle ayuda al padrino? (Spoiler: tampoco sabe) 🤷‍♂️'
+  ];
 
   constructor(
     public pruebasService: PruebasService,
@@ -381,9 +423,12 @@ export class PruebasComponent {
       this.mostrarExito.set(true);
       this.codigoInput = '';
     } else {
-      // Seleccionar imagen aleatoria de error
-      const randomIndex = Math.floor(Math.random() * this.errorImages.length);
-      this.errorImageSrc.set(this.errorImages[randomIndex]);
+      // Seleccionar imagen y mensaje aleatoriamente
+      const randomImageIndex = Math.floor(Math.random() * this.errorImages.length);
+      const randomMessageIndex = Math.floor(Math.random() * this.errorMessages.length);
+      
+      this.errorImageSrc.set(this.errorImages[randomImageIndex]);
+      this.errorMessage.set(this.errorMessages[randomMessageIndex]);
       this.mostrarModalError.set(true);
       this.codigoInput = '';
     }

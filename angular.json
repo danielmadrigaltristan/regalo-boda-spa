@@ -32,7 +32,8 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              }
+              },
+              "src/favicon.png"
             ],
             "styles": [
               "src/styles.scss"
