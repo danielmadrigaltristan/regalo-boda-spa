@@ -76,9 +76,9 @@ import { ErrorModalComponent } from '../shared/error-modal/error-modal.component
     <!-- Modal de confirmación de logout -->
     <app-confirmation-modal
       [show]="mostrarModal()"
-      title="¿Estás seguro?"
-      message="¿Quieres cerrar sesión y salir de la aplicación?"
-      confirmText="Sí, cerrar sesión"
+      title="¿Ya os habéis rendido?"
+      message="Cada vez que accedas a la aplicación debeis introducir los codigo de nuevo."
+      confirmText="Entendido"
       cancelText="Cancelar"
       (confirmed)="confirmarCerrarSesion()"
       (cancelled)="cancelarLogout()">

@@ -13,8 +13,7 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
     <div class="login-container">
       <div class="login-card">
         <h1>Que foto más bonita 🧩</h1>
-        <p>Si habéis llegado hasta aquí, es porque habéis finalizado el precioso puzle y os han entregado la clave de acceso…</p>
-        
+        <p>Si habéis terminado el puzzle ya teneis la llave para acceder.</p>
         <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
           <div class="form-group">
             <input 
