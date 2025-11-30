@@ -15,30 +15,23 @@ export class PruebasService {
   private pruebas: Prueba[] = [
     {
       id: 1,
-      titulo: 'Toques con el balón',
+      titulo: 'Toques con el balón ⚽',
       descripcion: 'Las fuerzas del universo del fútbol se enfrentan una vez más... pero esta vez, en nombre del amor!\n\n Uno será el orgulloso defensor del Real Madrid, el otro la fiera pasión del Barça. Vestidos con sus colores, debereis demostrar que en vuestra relación hay tanto juego en equipo como rivalidad.\n\nEl reto es simple… o eso parece:\n\nCada uno deberá mantener el balón en el aire y dar 10 toques… Ni el viento, ni las risas, ni las miradas cómplices pueden distraeros. Si el balón cae… el orgullo también.¿Podreis mantener la paz entre tanto toque, o el Clásico romperá la pareja antes que el balón toque el suelo?\n\nY no os olvideis, para que el VAR lo pueda valorar, grabado debe quedar.',
-      codigo: 'BALON10',
+      codigo: 'T0QU35',
       completada: false
     },
     {
       id: 2,
-      titulo: 'Canción de amor',
-      descripcion: 'Canta la primera estrofa de vuestra canción favorita. El código está en la letra número 15 de la canción.',
-      codigo: 'MUSIC15',
+      titulo: 'El himno de la gloria y la purpurina 🦄',
+      descripcion: 'Atención, pareja: el pueblo de Villalba de Duero os necesita. El equipo local no tiene himno decente y ha llegado la hora de solucionarlo.\n\nVuestra misión: componer y cantar un temazo digno de sonar en los altavoces del estadio… o al menos en el bar después del partido.\n\nLa actuación será en pleno partido, disfrazados de unicornios (sí, con cuerno, purpurina y todo el flow), y usando el micrófono legendario.\n\nDespués del conciertazo, os toca hacer de reporteros: entrevistad al público y preguntadles qué les ha parecido vuestro hit. \n\nSi conseguís que alguien cante con vosotros o que el bar os invite a una ronda, misión más que cumplida.\n\nRecompensa: fama local, muchas risas y un recuerdo que Villalba no olvidará jamás.\n\nRecordad, la prueba debeis grabar para que el VAR pueda volver a valorar',
+      codigo: 'H1MN0',
       completada: false
     },
     {
       id: 3,
-      titulo: 'Baile en pareja',
-      descripcion: 'Bailad vuestra coreografía especial durante 2 minutos. El código está en el lugar donde os conocisteis.',
-      codigo: 'DANCE2M',
-      completada: false
-    },
-    {
-      id: 4,
-      titulo: 'Declaración de amor',
-      descripcion: 'Escribid en un papel 3 razones por las que os amáis. El código es la suma de las letras de vuestros nombres.',
-      codigo: 'LOVE123',
+      titulo: 'La acampada pendiente ⛺',
+      descripcion: 'Ha llegado el momento de ajustar cuentas con el pasado.\n\nHace años hubo una acampada legendaria… en la que cuentan las malas lenguas que Ivan y alguno que otro acompañante no estuvieron invitados 😏.\n\nAhora toca el momento de la reconciliación: grabáos montando una tienda de campaña, como hubierais hecho en los viejos tiempos, demostrando que vuestro amor puede sobrevivir a las piquetas, los nudos y las discusiones de “eso no va ahí”.\n\nCuando la tengáis montada (o algo parecido), Elena deberá dejar claro de alguna forma que, por fin, le invita a acampar con ella.\n\nPuede ser con una frase, un gesto, un beso o simplemente diciendo:👉 “Venga, pasa… que esta vez sí te dejo quedarte.”',
+      codigo: 'T13ND4',
       completada: false
     }
   ];

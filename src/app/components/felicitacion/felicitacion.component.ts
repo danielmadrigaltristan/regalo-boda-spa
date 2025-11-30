@@ -15,29 +15,18 @@ import { ConfirmationModalComponent } from '../shared/confirmation-modal/confirm
       <div class="felicitacion-card">
         <div class="celebration-icon">🎉</div>
         
-        <h1>¡Felicitaciones!</h1>
+        <h1>Enhorabuena!</h1>
         
         <div class="message">
           <p>¡Habéis completado todas las pruebas con éxito!</p>
-          <p>Vuestro amor ha superado todos los desafíos y ahora podéis celebrar juntos este momento especial.</p>
-          <p>Como regalo final, os invitamos a uniros a nuestro grupo de WhatsApp donde podremos seguir compartiendo momentos especiales.</p>
-        </div>
-        
-        <div class="stats">
-          <div class="stat">
-            <span class="number">{{ pruebasService.getTotalPruebas() }}</span>
-            <span class="label">Pruebas Completadas</span>
-          </div>
+          <p>Con vuestro amor o cabezonería habéis superado todos los desafíos.</p>
+          <p>Como regalo final, os invitamos a uniros a nuestro grupo de WhatsApp donde podréis mostrarnos todo vuestro agradecimiento.</p>
         </div>
         
         <div class="actions">
           <button (click)="abrirWhatsApp()" class="whatsapp-btn">
-            <span class="whatsapp-icon">📱</span>
+            <img src="/assets/images/whatsapp.svg" width="35" height="35" style="margin-right: 8px;">
             Unirse al Grupo de WhatsApp
-          </button>
-          
-          <button (click)="reiniciar()" class="restart-btn">
-            Reiniciar Pruebas
           </button>
           
           <button (click)="confirmarLogout()" class="logout-btn">
@@ -46,7 +35,7 @@ import { ConfirmationModalComponent } from '../shared/confirmation-modal/confirm
         </div>
         
         <div class="final-message">
-          <p>¡Que tengáis una boda maravillosa! 💕</p>
+          <p>¡Que tengáis una vida maravillosa! 💕</p>
         </div>
       </div>
       <!-- Caras flotantes de los novios -->
@@ -259,13 +248,7 @@ export class FelicitacionComponent {
   ) {}
 
   abrirWhatsApp() {
-    // Cambia este número por el número real del grupo de WhatsApp
-    // Formato: +34XXXXXXXXX (sin espacios ni guiones)
-    const numeroGrupo = '+34123456789';
-    const mensaje = '¡Hola! He completado todas las pruebas del regalo de boda 🎉';
-    const url = `https://wa.me/${numeroGrupo}?text=${encodeURIComponent(mensaje)}`;
-    
-    window.open(url, '_blank');
+    window.open('https://chat.whatsapp.com/XXXXXXXXXXXX', '_blank');
   }
 
   reiniciar() {

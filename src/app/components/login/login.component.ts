@@ -12,8 +12,8 @@ import { FloatingFacesComponent } from '../floating-faces/floating-faces.compone
   template: `
     <div class="login-container">
       <div class="login-card">
-        <h1>🎉 Regalo de Boda 🎉</h1>
-        <p>Introduce la clave secreta para comenzar tu aventura</p>
+        <h1>Que foto más bonita 🧩</h1>
+        <p>Si habéis llegado hasta aquí, es porque habéis finalizado el precioso puzle y os han entregado la clave de acceso…</p>
         
         <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
           <div class="form-group">

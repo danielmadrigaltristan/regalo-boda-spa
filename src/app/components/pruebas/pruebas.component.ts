@@ -311,10 +311,11 @@ export class PruebasComponent {
   mostrarModal = signal(false);
   mostrarModalReglas = signal(false);
   mostrarModalError = signal(false);
-  errorImageSrc = signal('/assets/images/novia.png');
+  errorImageSrc = signal('/assets/images/error/cepi.png');
   pruebaActual = signal<Prueba | null>(null);
 
   private codigosValidos = ['BALON10', 'MUSIC15', 'DANCE2M', 'LOVE123'];
+  private errorImages = ['/assets/images/error/cepi.png'];
 
   constructor(
     public pruebasService: PruebasService,
@@ -380,9 +381,9 @@ export class PruebasComponent {
       this.mostrarExito.set(true);
       this.codigoInput = '';
     } else {
-      // Alternar entre las dos imágenes aleatoriamente
-      const images = ['/assets/images/novia.png', '/assets/images/novio.png'];
-      this.errorImageSrc.set(images[Math.floor(Math.random() * images.length)]);
+      // Seleccionar imagen aleatoria de error
+      const randomIndex = Math.floor(Math.random() * this.errorImages.length);
+      this.errorImageSrc.set(this.errorImages[randomIndex]);
       this.mostrarModalError.set(true);
       this.codigoInput = '';
     }
