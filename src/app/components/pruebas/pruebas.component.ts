@@ -331,6 +331,7 @@ export class PruebasComponent {
     '/assets/images/error/hermanasara.png',
     '/assets/images/error/ibelina.png',
     '/assets/images/error/isidro.png',
+    '/assets/images/error/infante.png',
     '/assets/images/error/jon.png',
     '/assets/images/error/lirio.png',
     '/assets/images/error/miriam.png',

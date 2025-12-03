@@ -248,7 +248,7 @@ export class FelicitacionComponent {
   ) {}
 
   abrirWhatsApp() {
-    window.open('https://chat.whatsapp.com/XXXXXXXXXXXX', '_blank');
+    window.open('https://chat.whatsapp.com/JYbeBsbdUShIGmo75t0jjj', '_blank');
   }
 
   reiniciar() {
